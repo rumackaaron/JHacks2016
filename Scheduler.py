@@ -106,6 +106,7 @@ def initializeSchedule(courseList):
             addByTime(crs)
         elif len(crs.sections) > 1:
             addByConflict(crs)
+    return initialFinalsSchedule
 
 # takes in a list of lists of courses. The index of the first list represents the time slot of the final. The list at index
 # i contains all courses who's final will be given at index i
@@ -159,7 +160,6 @@ def scheduler(max_steps, finalsTime = None):
             marker = (marker + 1)%len(finalsTime)
             while len(finalsTime[marker]) <= 1:
                 marker = (marker + 1)%len(finalsTime)
-    
     return finalsTime
     
     
@@ -169,9 +169,14 @@ def num_conflicts(course, courseList):
     numConflicts = 0
     # go though the courses in courseList and check for conflicts
     for crs in courseList:
-        for stdnt in course.students:
-            if stdnt in crs.students:
-                numConflicts += 1
+        if len(course.students) < len(crs.students):
+            for stdnt in course.students:
+                if stdnt in crs.students:
+                    numConflicts += 1
+        else:
+            for stdnt in crs.students:
+                if stdnt in course.students:
+                    numConflicts += 1
     return numConflicts
     
 # takes in a finals schedule and returns it in the format Aaron wants it
@@ -179,5 +184,5 @@ def postProcess(finalsSchedule):
     out = {}
     for i in range(len(finalsSchedule)):
         for crs in finalsSchedule[i]:
-            out[crs.title] = i
+            out[crs.course] = i
     return out
