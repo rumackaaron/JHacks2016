@@ -31,4 +31,8 @@ class Student:
     def __init__(self, data):
         self.id = data['id']
         self.courses = data['courses']
+        # Courses is a tuple (course, difficulty)
         self.preferences = data['preferences']
+        # Preferences is an array of 5 elements
+        # Elts 0:4 are integers representing importance
+        # Elt 4 is array of tuples (slot #, importance)
