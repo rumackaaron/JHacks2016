@@ -10,7 +10,7 @@ def getClasses():
     response = urllib2.urlopen(url)
     data = str(response.read())
 
-    response_json  = json.loads(data)
+    response_json = json.loads(data)
 
     def getDept(json_elt): return json_elt['department']
     depts = map(getDept, response_json)
@@ -58,9 +58,9 @@ def getStudents(num):
     courses = {}
     course_objs = {}
 
-    with open('coursedata.txt', 'r') as file:
-        courses = json.load(file)
-    file.close()
+    with open('coursedata.txt', 'r') as inp:
+        courses = json.load(inp)
+    inp.close()
 
     course_names = courses.keys()
     course_names.sort()
@@ -68,9 +68,9 @@ def getStudents(num):
     for name in course_names:
         course_objs[name] = Course({'class': name})
 
-    for dict in courses.values():
-        for sect in dict['sections']:
-            course_objs[dict['course']].sections.append(Section(sect))
+    for dicti in courses.values():
+        for sect in dicti['sections']:
+            course_objs[dicti['course']].sections.append(Section(sect))
 
     for n in range(num):
         student = Student()
@@ -104,10 +104,9 @@ def getStudents(num):
 
             attempt += 1
 
-        def assign_diff(sect): return (sect, random.choice(range(1, 6)))
+        def assign_diff(s): return s, random.choice(range(1, 6))
         schedule = map(assign_diff, schedule)
         student.courses = schedule
-
 
         conflicts = []
         population = range(0, 20)
@@ -120,3 +119,5 @@ def getStudents(num):
         student.preferences = preferences
 
         students.append(student)
+
+    return students, course_objs
