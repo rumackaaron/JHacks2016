@@ -4,7 +4,7 @@ import time
 def main():
     
     start = time.time()
-    students, course_obj_dict = getStudents(1000)
+    students, course_obj_dict = getStudents(4000)
     print 'Created students'
     
     all_courses = course_obj_dict.values()
@@ -18,6 +18,8 @@ def main():
     postSchedule = Scheduler.postProcess(tentSchedule)
     end = time.time()
     print 'output schedule for preference maximization'
+
+    print Scheduler.conflictsBySlot
 
     print end-start
 

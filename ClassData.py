@@ -33,6 +33,13 @@ class Student:
         # Elts 0:3 are integers representing importance
         # Elt 3 is array of tuples (slot #, importance)
 
+    def set_vals(self, dictionary):
+        self.id = dictionary['id']
+        self.courses = []
+        for arr in dictionary['courses']:
+            self.courses.append((arr[0], arr[1]))
+        self.preferences = dictionary['preferences']
+
     def to_dict(self):
         output_courses = []
         for course in self.courses:
