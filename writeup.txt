@@ -1,0 +1,8 @@
+1. Start by assigning all class times to a finals time slot. This will ensure no student has two finals at the same time, because no student can have two classes at the same time.
+2. Minimize other "costs" in the following order, using the min-conflicts algorithm. 
+	allow students to choose and rank from a set of preferences
+		i) earlier tests, if they want to leave early
+		ii) later tests, if they want more time to study for all of them
+		iii) spread out harder tests, let students rank
+		iv) spread out tests as much as possible, no rank per test
+		v) avoid certain slots, if extra-curricular conflicts
