@@ -1,6 +1,7 @@
 from ClassData import *
 import urllib2
 import json
+import random
 
 def getClasses():
     school = 'UMCP'
@@ -51,5 +52,71 @@ def getClasses():
         output.write(courses_json_out)
     output.close()
 
-getClasses()
 
+def getStudents(num):
+    students = []
+    courses = {}
+    course_objs = {}
+
+    with open('coursedata.txt', 'r') as file:
+        courses = json.load(file)
+    file.close()
+
+    course_names = courses.keys()
+    course_names.sort()
+
+    for name in course_names:
+        course_objs[name] = Course({'class': name})
+
+    for dict in courses.values():
+        for sect in dict['sections']:
+            course_objs[dict['course']].sections.append(Section(sect))
+
+    for n in range(num):
+        student = Student()
+        student.id = n
+
+        schedule = []
+
+        idxs = random.sample(range(len(course_names)), 3)
+        idxs.append(idxs[0] - 1)
+        idxs.append(idxs[0] - 2)
+        idxs.append(idxs[1] - 1)
+        idxs.append(idxs[2] - 1)
+
+        num_classes = random.choice([4,5,5])
+        attempt = 0
+
+        while len(schedule) < num_classes and attempt < 7:
+            if idxs[attempt] < 0:
+                attempt += 1
+                continue
+            for sect in courses[course_names[idxs[attempt]]]['sections']:
+                no_add = False
+                for s in schedule:
+                    if s.start.split(':')[0] == sect['starttime'].split(':')[0]:
+                        no_add = True
+                        break
+
+                if not no_add:
+                    schedule.append(Section(sect))
+                    course_objs[sect['class']].students.append(n)
+
+            attempt += 1
+
+        def assign_diff(sect): return (sect, random.choice(range(1, 6)))
+        schedule = map(assign_diff, schedule)
+        student.courses = schedule
+
+
+        conflicts = []
+        population = range(0, 20)
+        slots = random.sample(population, random.choice(range(0, 4)))
+        for i in slots:
+            conflict = (i, random.choice(range(1,6)))
+            conflicts.append(conflict)
+
+        preferences = [random.choice(range(-5,6)), random.choice(range(1,6)), random.choice(range(1,6)), conflicts]
+        student.preferences = preferences
+
+        students.append(student)

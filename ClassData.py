@@ -24,11 +24,11 @@ class Section:
 
 class Student:
 
-    def __init__(self, data):
-        self.id = data['id']
-        self.courses = data['courses']
-        # Courses is a tuple (course, difficulty)
-        self.preferences = data['preferences']
+    def __init__(self):
+        self.id = 0
+        self.courses = []
+        # Courses is a list of tuples (course, difficulty)
+        self.preferences = []
         # Preferences is an array of 5 elements
         # Elts 0:3 are integers representing importance
         # Elt 3 is array of tuples (slot #, importance)
