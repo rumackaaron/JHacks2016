@@ -32,3 +32,9 @@ class Student:
         # Preferences is an array of 5 elements
         # Elts 0:3 are integers representing importance
         # Elt 3 is array of tuples (slot #, importance)
+
+    def to_dict(self):
+        output_courses = []
+        for course in self.courses:
+            output_courses.append([course[0].name, course[1]])
+        return {'id': self.id, 'courses': output_courses, 'preferences': self.preferences}
