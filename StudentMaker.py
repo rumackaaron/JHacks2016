@@ -118,6 +118,7 @@ def getStudents(num):
                 if not no_add:
                     schedule.append(Section(sect))
                     course_objs[sect['class']].students.append(n)
+                    break
 
             attempt += 1
 
