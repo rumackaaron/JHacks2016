@@ -25,7 +25,6 @@ class Section:
         self.name = data['class']
         self.professor = data['professor']
         self.seats = data['seats']
-        self.students = []
 
 
 class Student:
