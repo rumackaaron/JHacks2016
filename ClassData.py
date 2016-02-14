@@ -5,6 +5,7 @@ class Course:
         self.course = data['class']
         self.semester = data['semester']
         self.title = data['title']
+        self.students = []
         return self
 
 
@@ -23,7 +24,7 @@ class Section:
         self.name = data['class']
         self.professor = data['professor']
         self.seats = data['seats']
-        self.students = data['students']
+        self.students = []
 
 
 class Student:
@@ -34,5 +35,5 @@ class Student:
         # Courses is a tuple (course, difficulty)
         self.preferences = data['preferences']
         # Preferences is an array of 5 elements
-        # Elts 0:4 are integers representing importance
-        # Elt 4 is array of tuples (slot #, importance)
+        # Elts 0:3 are integers representing importance
+        # Elt 3 is array of tuples (slot #, importance)
