@@ -6,6 +6,7 @@ class Course:
         self.semester = data['semester']
         self.title = data['title']
         self.students = []
+        self.sections = []
         return self
 
 

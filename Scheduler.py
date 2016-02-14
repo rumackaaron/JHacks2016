@@ -8,19 +8,25 @@ initialFinalsSchedule = []
 #numTimeSlots is the number of time slots in which finals are being offered
 numTimeSlots = 20
 
-#takes in a course, and puts it in it's appropriate time slot 
-def addCoursetoSchedule(crs):
+#add a course to the schedule based on it's start time
+def addByTime(crs):
     pass
 
-#takes in a list of courses, and randomly assigns them time slots.
-#Also initializes the conflictsBySlot array
-def initializeSchedule(courses):
-    #fill initialFinalsSchedule with empty lists for each time slot allocated
-    for i in range(numTimeSlots):
-        initialFinalsSchedule.append([])
-    #go through each course and add it to a course list
-    for crs in courses:
-        addCoursetoSchedule(crs)
+#add a course to the schedule based on the minumul conflict slot
+def addByConflict(crs):
+    bestTimeSlot = 0
+    numberOfConflicts = num_conflicts()
+    for i in range(0,numTimeSlots):
+        if crs.
+        
+
+#Add all classes with only one section to the finals schedule based on their starting time
+#Then add all remaining classes to minimize conflicts
+def initializeSchedule(oneSections,multiSections):
+    for crsOne in oneSections:
+        addByTime(crsOne)
+    for crsMany in multiSections:
+        addByConflict(crsMany)
 
 #takes in a list of lists of courses. The index of the first list represents the time slot of the final. The list at index
 #i contains all courses who's final will be given at index i
