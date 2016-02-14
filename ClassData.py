@@ -8,6 +8,7 @@ class Course:
         self.semester = data['semester']
         self.title = data['title']
         self.students = []
+        self.sections = []
         return self
 
 
@@ -26,7 +27,6 @@ class Section:
         self.name = data['class']
         self.professor = data['professor']
         self.seats = data['seats']
-        self.students = []
 
 
 class Student:
