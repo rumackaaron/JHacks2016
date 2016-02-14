@@ -1,0 +1,18 @@
+Our project is broken up into three steps. 
+
+1) Preprocessing
+In the first step, we read data from the BookHolders API, to create a class schedule for a university. Each class has a number of sections with meeting times. We will generate a number of students, using the following algorith:
+	a) Each student will be enrolled in five courses, two in one department, two in a second department, and one in a third department.
+	b) If two of those courses conflict, one will be dropped at random.
+We then create an initial bad finals schedule, which assigns all courses with only one section a finals slot based on their start time and date. We then insert all courses with more than one section into the finals schedule in the slot that minimizes conflicts. A conflict is defined as a student having two finals in the same time slot. For simplicity, and from experience, we assume twenty finals slots.  
+
+2)Conflict Avoidance
+In the second step, we use a modified version of the Min-Conflicts algorithm to reduce the number of conflicts as much as possible. To do this, we repeatedly iterate through the list of finals slots, and find the time slot that minimizes the number of conflicts for the first final in that time slot. We then move that final to that time slot. We continue this algorithm until either there are no conflicts, or we have performed a specified number of moves.
+
+3)Preference Optimization
+In the final step, we optimize student preferences for finals. To optimize student preferences without creating additional conflicts, we switch from considering individual finals to considering final slots as a whole. We again perform a modified Min-Conflicts algorithm, and switch time slots around to minimize "badness" of each time slot. "Badness" is defined as the number of students who would prefer to not have that final in that time slot. We will measure student preference based on the following:
+	a) if a student prefers their tests to be earlier
+	b) if a student prefers their tests to be later
+	c) if a student prefers to spread out their harder tests
+	d) if a student prefers to spread out all their tests without ranking them by difficulty
+	e) if a student prefers to avoid taking finals in certain time slots 
