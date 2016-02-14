@@ -12,7 +12,7 @@ numTimeSlots = 20
 def addByConflict(crs):
     fewestConflicts = num_conflicts(crs, initialFinalsSchedule[0])
     bestTimeslot = 0
-    for i in range(1,20):
+    for i in range(1,numTimeSlots):
         curConflicts = num_conflicts(crs,initialFinalsSchedule[i])
         if curConflicts < fewestConflicts:
             fewestConflicts = curConflicts
