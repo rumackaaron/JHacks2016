@@ -2,8 +2,25 @@ import ClassData
 
 #conflictsBySlot represents the total number of existing conflicts per time slot. Ideally it would all be zeros.
 conflictsBySlot = []
+#initialFinalsSchedule represents a finals schedule which will minimize the number of student conflicts with
+#multiple finals in the same time slot
+initialFinalsSchedule = []
+#numTimeSlots is the number of time slots in which finals are being offered
+numTimeSlots = 20
 
+#takes in a course, and puts it in it's appropriate time slot 
+def addCoursetoSchedule(crs):
+    pass
 
+#takes in a list of courses, and randomly assigns them time slots.
+#Also initializes the conflictsBySlot array
+def initializeSchedule(courses):
+    #fill initialFinalsSchedule with empty lists for each time slot allocated
+    for i in range(numTimeSlots):
+        initialFinalsSchedule.append([])
+    #go through each course and add it to a course list
+    for crs in courses:
+        addCoursetoSchedule(crs)
 
 #takes in a list of lists of courses. The index of the first list represents the time slot of the final. The list at index
 #i contains all courses who's final will be given at index i
@@ -56,6 +73,9 @@ def scheduler(max_steps, finalsTime):
             while len(courses[marker] <= 1):
                 marker = (marker + 1)%len(finalsTime)
     
+    return finalsTime
+    
+    
 #takes as input the a list of courses and a course to add to that courselist. Returns the
 #number of conflicts that list of courses would create if their finals were all offered at the same time.
 def num_conflicts(course, courseList):
@@ -67,3 +87,10 @@ def num_conflicts(course, courseList):
                 numConflicts += 1
     return num_conflicts
     
+#takes in a finals schedule and returns it in the format Aaron wants it
+def postProcess(finalsSchedule):
+    out = {}
+    for i in range(len(finalsSchedule)):
+        for crs in finalsSchedule[i]:
+            out[crs.title] = i
+    return out
