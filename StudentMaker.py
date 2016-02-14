@@ -53,6 +53,23 @@ def getClasses():
     output.close()
 
 
+def schedule_from_file():
+    students = []
+    schedule = []
+
+    with open('schedule.txt', 'r') as inp2:
+        data = json.load(inp2)
+        for student_dict in data['students']:
+            student = Student()
+            student.set_vals(student_dict)
+            students.append(student)
+
+        schedule = data['schedule']
+    inp2.close()
+
+    return students, schedule
+
+
 def getStudents(num):
     students = []
     courses = {}
@@ -121,3 +138,5 @@ def getStudents(num):
         students.append(student)
 
     return students, course_objs
+
+schedule_from_file()

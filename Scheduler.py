@@ -184,5 +184,5 @@ def postProcess(finalsSchedule):
     out = {}
     for i in range(len(finalsSchedule)):
         for crs in finalsSchedule[i]:
-            out[crs.course] = i
+            out[crs] = i
     return out
