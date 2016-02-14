@@ -8,26 +8,16 @@ inverse = [0 for _ in range(FINAL_SLOTS)]  # real to idx
 
 
 def studentBadness(student, schedule, mapping, acc):
-    # TODO: Weight the four difference badness components equally
     for course in student.courses:
         if course[0] not in schedule:
             continue
         slot = mapping[schedule[course[0]]]
-        # Earlier/Later
         acc[slot] += student.preferences[0] * slot
-        #earlier[slot] -= student.preferences[0]
-        #later[slot] += student.preferences[0]
 
         # Avoid slots
         for (bad_slot, importance) in student.preferences[3]:
             if bad_slot == slot:
                 acc[slot] += importance
-                #earlier[slot] -= importance
-                #later[slot] -= importance
-            '''if bad_slot == slot - 1:
-                earlier[slot] += importance
-            if bad_slot == slot + 1:
-                later[slot] += importance'''
 
     # Spread out
     for i in range(len(student.courses)):
@@ -45,24 +35,8 @@ def studentBadness(student, schedule, mapping, acc):
             diffBadness = float(student.preferences[1]) * float(diff1 + diff2) / dist
             acc[slot1] += diffBadness / 2
             acc[slot2] += diffBadness / 2
-            '''diste1 = max(float(abs(slot1 - 1 - slot2)), 1.0)
-            distl1 = max(float(abs(slot1 + 1 - slot2)), 1.0)
-            e1l2 = (diffBadness * dist) / diste1
-            e2l1 = (diffBadness * dist) / distl1
-
-            earlier[slot1] += e1l2 - diffBadness
-            later[slot1] += e2l1 - diffBadness
-            earlier[slot2] += e2l1 - diffBadness
-            later[slot2] += e1l2 - diffBadness'''
 
             regBadness = float(student.preferences[2]) / dist
-            '''e1l2 = (regBadness * dist) / diste1
-            e2l1 = (regBadness * dist) / distl1
-
-            earlier[slot1] += diffBadness - e1l2
-            later[slot1] += diffBadness - e2l1
-            earlier[slot2] += diffBadness - e2l1
-            later[slot2] += diffBadness - e1l2'''
 
             acc[slot1] += regBadness / 2
             acc[slot2] += regBadness / 2
@@ -91,19 +65,24 @@ def optimizeSchedule(students, schedule, max_steps, mapp = None):
     newMap = mapp
 
     badness_arr = scheduleBadness(students, schedule, mapp)
-    print badness_arr
     badness = sum(badness_arr)
 
     worst_badness = max(badness_arr)
+    worst_badness2 = 0
     worst_idx = 0
-    for i in range(len(badness_arr)):
+    worst_idx2 = 0
+
+    for i in range(FINAL_SLOTS):
         if badness_arr[i] == worst_badness:
             worst_idx = i
+        if badness_arr[i] > worst_badness2 and badness_arr[i] != worst_badness:
+            worst_idx2 = i
+            worst_badness2 = badness_arr[i]
 
     best_badness = badness
     best_map = list(newMap)
 
-    for i in range(FINAL_SLOTS):
+    '''for i in range(FINAL_SLOTS):
         temp = list(newMap)
         if i == worst_idx:
             continue
@@ -115,10 +94,26 @@ def optimizeSchedule(students, schedule, max_steps, mapp = None):
         curr = sum(scheduleBadness(students, schedule, temp))
         if curr < best_badness:
             best_badness = curr
-            best_map = list(temp)
+            best_map = list(temp)'''
 
+    for i in range(FINAL_SLOTS):
+        for j in range(FINAL_SLOTS):
+            temp = list(newMap)
+            if i == j:
+                continue
 
-    if worst_badness < best_badness:
+            orig = inverse[j]
+            temp[i] = newMap[orig]
+            temp[orig] = newMap[i]
+
+            curr = sum(scheduleBadness(students, schedule, temp))
+            if curr < best_badness:
+                best_badness = curr
+                best_map = list(temp)
+
+    if best_badness < badness:
+        print badness
+        print best_map
         return optimizeSchedule(students, schedule, max_steps - 1, best_map)
     else:
         return best_map
