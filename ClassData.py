@@ -1,3 +1,5 @@
+FINAL_SLOTS = 20
+
 class Course:
 
     def __init__(self, data):
