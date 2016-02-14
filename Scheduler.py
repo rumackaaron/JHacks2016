@@ -9,6 +9,7 @@ initialFinalsSchedule = [[] for _ in range(ClassData.FINAL_SLOTS)]
 numTimeSlots = ClassData.FINAL_SLOTS
 
 # add a course to the schedule based on minimal conflict
+#Complexity - O(l*n^2), where l is number of finals slots and n is number of students in the course
 def addByConflict(crs):
     fewestConflicts = num_conflicts(crs, initialFinalsSchedule[0])
     bestTimeslot = 0
@@ -21,6 +22,7 @@ def addByConflict(crs):
     initialFinalsSchedule[bestTimeslot].append(crs)
 
 # add a course to the schedule based on the start time
+#Complexity - O(1), but a very long O(1)
 def addByTime(crs):
     for i in range(0,numTimeSlots):
         days = crs.sections[0].days.lower()
@@ -100,6 +102,7 @@ def addByTime(crs):
 
 # Add all classes with only one section to the finals schedule based on their starting time
 # Then add all remaining classes to minimize conflicts
+#Complexity - O(c*n^2), where c is the number of courses, and n is the number of students in the course
 def initializeSchedule(courseList):
     for crs in courseList:
         if len(crs.sections) == 1:
@@ -110,6 +113,7 @@ def initializeSchedule(courseList):
 
 # takes in a list of lists of courses. The index of the first list represents the time slot of the final. The list at index
 # i contains all courses who's final will be given at index i
+#Complexity - O(n^2*s) where n is the number of students per course, and s is max_steps 
 def scheduler(max_steps, finalsTime = None):
     if finalsTime is None:
         finalsTime = initialFinalsSchedule
@@ -165,6 +169,7 @@ def scheduler(max_steps, finalsTime = None):
     
 # takes as input the a list of courses and a course to add to that courselist. Returns the
 # number of conflicts that list of courses would create if their finals were all offered at the same time.
+#Complexity - O(n^2) where n is number of students in course. Could be optimized if both were sorted or hashtable
 def num_conflicts(course, courseList):
     numConflicts = 0
     # go though the courses in courseList and check for conflicts
@@ -180,6 +185,7 @@ def num_conflicts(course, courseList):
     return numConflicts
     
 # takes in a finals schedule and returns it in the format Aaron wants it
+#Complexity is O(c), where c is the number of courses
 def postProcess(finalsSchedule):
     out = {}
     for i in range(len(finalsSchedule)):
