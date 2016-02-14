@@ -120,7 +120,3 @@ def getStudents(num):
         student.preferences = preferences
 
         students.append(student)
-
-
-getStudents(1)
-
