@@ -24,81 +24,80 @@ def addByConflict(crs):
 # add a course to the schedule based on the start time
 #Complexity - O(1), but a very long O(1)
 def addByTime(crs):
-    for i in range(0,numTimeSlots):
-        days = crs.sections[0].days.lower()
-        start_hour = crs.sections[0].start.split(':')[0]
-        # if the class meets on a monday or wednesday or friday
-        if 'm' in days or 'w' in days or 'f' in days:
-            # if class is in the morning
-            if 'am' in crs.sections[0].start:
-                # if class is between midnight and 9
-                if start_hour < 9:
-                    initialFinalsSchedule[0].append(crs)
-                # if class is between 9 and 10
-                elif start_hour < 10:
-                    initialFinalsSchedule[1].append(crs)
-                # if class is between 10 and 11
-                elif start_hour < 11:
-                    initialFinalsSchedule[2].append(crs)
-                # if class is between 11 and noon
-                else:
-                    initialFinalsSchedule[3].append(crs)
-            # if the class is in the afternoon
+    days = crs.sections[0].days.lower()
+    start_hour = crs.sections[0].start.split(':')[0]
+    # if the class meets on a monday or wednesday or friday
+    if 'm' in days or 'w' in days or 'f' in days:
+        # if class is in the morning
+        if 'am' in crs.sections[0].start:
+            # if class is between midnight and 9
+            if start_hour < 9:
+                initialFinalsSchedule[0].append(crs)
+            # if class is between 9 and 10
+            elif start_hour < 10:
+                initialFinalsSchedule[1].append(crs)
+            # if class is between 10 and 11
+            elif start_hour < 11:
+                initialFinalsSchedule[2].append(crs)
+            # if class is between 11 and noon
             else:
-                # if class is between noon and 1
-                if start_hour > 11:
-                    initialFinalsSchedule[4].append(crs)
-                # if class is between 1 and 2
-                elif start_hour < 2:
-                    initialFinalsSchedule[5].append(crs)
-                # if class is between 2 and 3
-                elif start_hour < 3:
-                    initialFinalsSchedule[6].append(crs)
-                # if class is between 3 and 4
-                elif start_hour < 4:
-                    initialFinalsSchedule[7].append(crs)
-                # if class is between 4 and 5
-                elif start_hour < 5:
-                    initialFinalsSchedule[8].append(crs)
-                # if class is after 5
-                else:
-                    initialFinalsSchedule[9].append(crs)
-        # else if the class meets on a tuesday or thursday
-        elif 'u' in days or 'h' in days:
-            # if class is in the morning
-            if 'am' in crs.sections[0].start:
-                # if class is between midnight and 9
-                if start_hour < 9:
-                    initialFinalsSchedule[10].append(crs)
-                # if class is between 9 and 10
-                elif start_hour < 10:
-                    initialFinalsSchedule[11].append(crs)
-                # if class is between 10 and 11
-                elif start_hour < 11:
-                    initialFinalsSchedule[12].append(crs)
-                # if class is between 11 and noon
-                else:
-                    initialFinalsSchedule[13].append(crs)
-            # if the class is in the afternoon
+                initialFinalsSchedule[3].append(crs)
+        # if the class is in the afternoon
+        else:
+            # if class is between noon and 1
+            if start_hour > 11:
+                initialFinalsSchedule[4].append(crs)
+            # if class is between 1 and 2
+            elif start_hour < 2:
+                initialFinalsSchedule[5].append(crs)
+            # if class is between 2 and 3
+            elif start_hour < 3:
+                initialFinalsSchedule[6].append(crs)
+            # if class is between 3 and 4
+            elif start_hour < 4:
+                initialFinalsSchedule[7].append(crs)
+            # if class is between 4 and 5
+            elif start_hour < 5:
+                initialFinalsSchedule[8].append(crs)
+            # if class is after 5
             else:
-                # if class is between noon and 1
-                if start_hour > 11:
-                    initialFinalsSchedule[14].append(crs)
-                # if class is between 1 and 2
-                elif start_hour < 2:
-                    initialFinalsSchedule[15].append(crs)
-                # if class is between 2 and 3
-                elif start_hour < 3:
-                    initialFinalsSchedule[16].append(crs)
-                # if class is between 3 and 4
-                elif start_hour < 4:
-                    initialFinalsSchedule[17].append(crs)
-                # if class is between 4 and 5
-                elif start_hour < 5:
-                    initialFinalsSchedule[18].append(crs)
-                # if class is after 5
-                else:
-                    initialFinalsSchedule[19].append(crs)
+                initialFinalsSchedule[9].append(crs)
+    # else if the class meets on a tuesday or thursday
+    elif 'u' in days or 'h' in days:
+        # if class is in the morning
+        if 'am' in crs.sections[0].start:
+            # if class is between midnight and 9
+            if start_hour < 9:
+                initialFinalsSchedule[10].append(crs)
+            # if class is between 9 and 10
+            elif start_hour < 10:
+                initialFinalsSchedule[11].append(crs)
+            # if class is between 10 and 11
+            elif start_hour < 11:
+                initialFinalsSchedule[12].append(crs)
+            # if class is between 11 and noon
+            else:
+                initialFinalsSchedule[13].append(crs)
+        # if the class is in the afternoon
+        else:
+            # if class is between noon and 1
+            if start_hour > 11:
+                initialFinalsSchedule[14].append(crs)
+            # if class is between 1 and 2
+            elif start_hour < 2:
+                initialFinalsSchedule[15].append(crs)
+            # if class is between 2 and 3
+            elif start_hour < 3:
+                initialFinalsSchedule[16].append(crs)
+            # if class is between 3 and 4
+            elif start_hour < 4:
+                initialFinalsSchedule[17].append(crs)
+            # if class is between 4 and 5
+            elif start_hour < 5:
+                initialFinalsSchedule[18].append(crs)
+            # if class is after 5
+            else:
+                initialFinalsSchedule[19].append(crs)
 
 # Add all classes with only one section to the finals schedule based on their starting time
 # Then add all remaining classes to minimize conflicts
